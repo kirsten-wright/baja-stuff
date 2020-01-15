@@ -63,6 +63,6 @@ double rpm_calc(unsigned long timeA, unsigned long timeB){
 
 double vel_calc(unsigned long timeA, unsigned long timeB){
   deltaG = timeA-timeB;
-
+  
   return placehold;
 }
