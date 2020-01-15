@@ -4,14 +4,9 @@
 //Pin 3 is attached to engine rpm
 #define drivegear 61;
 #define cvtshaft 18;
-volatile unsigned long time1b;
-volatile unsigned long time2b;
-volatile unsigned long deltaL;
-volatile double placehold;
+volatile unsigned long time1b, time2b, deltaL, deltaG;
+volatile double placehold, gear_vel, rpm, last_rpm;
 volatile int gateL = 0;
-volatile double gear_vel;
-volatile double rpm;
-volatile double last_rpm;
 unsigned long timestamp;
 
 void setup(){
@@ -22,9 +17,15 @@ void setup(){
 
 void loop(){
   if(millis()%10 == 0){
-  if((rpm > 1.5*(last_rpm + 1.0)){rpm = last_rpm;}
+  if(rpm > (1.5*(last_rpm + 1.0))){rpm = last_rpm;}
   timestamp = micros();
-  Serial.println("%lu,%lf,%lf",timestamp,rpm,gear_vel);
+  
+  Serial.print(timestamp);
+  Serial.print(",");
+  Serial.print(rpm);
+  Serial.print(",");
+  Serial.println(gear_vel);
+
   }
 }
 
@@ -46,10 +47,9 @@ double rpm_calc(unsigned long timeA, unsigned long timeB){
   return placehold;
 }
 
-/*
 int gear(){
-if(gateL==0){gateL=1;}
-else if(gateL==1){
+if(gateG==0){gateG=1;}
+else if(gateG==1){
   time2b = micros();
   last_rpm = rpm;
   rpm = rpm_calc(time2b,time1b);
@@ -57,4 +57,3 @@ else if(gateL==1){
   gateL=0; 
   }
 }
-*/
